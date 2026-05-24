@@ -13,11 +13,13 @@ const clientRoutes = require('./routes/clients');
 const roomRoutes = require('./routes/rooms');
 const checkinRoutes = require('./routes/checkins');
 const serviceRoutes = require('./routes/services');
+const employeesRoutes = require('./routes/employees');
 
 app.use('/api/clients', clientRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/checkins', checkinRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/employees', employeesRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

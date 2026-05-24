@@ -13,8 +13,8 @@
 			<el-col
 				v-for="employee in employees"
 				:key="employee.idСотрудники"
-				:span="8">
-				<el-card class="employee-card">
+				:span="6">
+				<el-card class="employee-card" style="margin-bottom: 8px">
 					<el-avatar :size="60" style="margin-bottom: 15px"> 👤 </el-avatar>
 					<h3>{{ employee.ФИО }}</h3>
 					<p>
@@ -73,21 +73,6 @@
 			employees.value = res.data;
 		} catch (e) {
 			console.error(e);
-			// Временные данные, если маршрут ещё не создан
-			employees.value = [
-				{
-					idСотрудники: 1,
-					ФИО: 'Иванова Анна Сергеевна',
-					Должность: 'Администратор',
-					Паспорт: '1234567890',
-				},
-				{
-					idСотрудники: 2,
-					ФИО: 'Петров Сергей Александрович',
-					Должность: 'Горничная',
-					Паспорт: '0987654321',
-				},
-			];
 		}
 	}
 
