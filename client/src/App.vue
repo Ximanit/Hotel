@@ -1,13 +1,25 @@
 <template>
 	<div class="app-container">
 		<header class="header">
-			<h1>🏨 Гостиница "Уют"</h1>
+			<div class="header-content">
+				<h1>🏨 Гостиница "Уют"</h1>
+
+				<!-- Hamburger для мобильных -->
+				<button class="hamburger" @click="toggleSidebar">☰</button>
+			</div>
 		</header>
 
 		<div class="layout">
 			<!-- Sidebar -->
-			<el-aside width="240px" class="sidebar">
-				<el-menu :default-active="$route.path" router class="menu">
+			<el-aside
+				:width="isMobile ? '100%' : '240px'"
+				class="sidebar"
+				:class="{ open: sidebarOpen }">
+				<el-menu
+					:default-active="$route.path"
+					router
+					class="menu"
+					@select="closeSidebarOnMobile">
 					<el-menu-item index="/"
 						><el-icon><DataBoard /></el-icon> Дашборд</el-menu-item
 					>
@@ -37,201 +49,138 @@
 	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+	const sidebarOpen = ref(false);
+	const isMobile = ref(window.innerWidth <= 768);
+
+	const toggleSidebar = () => {
+		sidebarOpen.value = !sidebarOpen.value;
+	};
+
+	const closeSidebarOnMobile = () => {
+		if (isMobile.value) sidebarOpen.value = false;
+	};
+
+	const handleResize = () => {
+		isMobile.value = window.innerWidth <= 768;
+		if (!isMobile.value) sidebarOpen.value = false;
+	};
+
+	onMounted(() => {
+		window.addEventListener('resize', handleResize);
+	});
+
+	onBeforeUnmount(() => {
+		window.removeEventListener('resize', handleResize);
+	});
+</script>
 
 <style scoped>
 	.app-container {
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
 		background: #f8f9fa;
 	}
 
 	.header {
 		background: linear-gradient(135deg, #007bff, #0056b3);
 		color: white;
-		padding: 1rem 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+		padding: 1rem 1.2rem;
 		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+		position: sticky;
+		top: 0;
+		z-index: 100;
 	}
 
-	.header h1 {
-		margin: 0;
-		font-size: 1.9rem;
-	}
-
-	nav a {
-		color: white;
-		text-decoration: none;
-		margin-left: 1.8rem;
-		font-weight: 500;
-		transition: all 0.2s;
-	}
-
-	nav a:hover {
-		opacity: 0.85;
-		text-decoration: underline;
-	}
-
-	main {
-		padding: 2rem;
-	}
-</style>
-
-<style>
-	/* Глобальные стили для всех страниц */
-	.page {
+	.header-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		max-width: 1400px;
 		margin: 0 auto;
 	}
 
-	.page-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 25px;
-		padding-bottom: 15px;
-		border-bottom: 2px solid #eee;
-	}
-
-	.page-header h1 {
+	.header h1 {
 		margin: 0;
-		color: #333;
-		font-size: 2rem;
+		font-size: 1.6rem;
 	}
 
-	.add-btn {
-		background: #28a745;
-		color: white;
+	.hamburger {
+		display: none;
+		background: none;
 		border: none;
-		padding: 12px 24px;
-		font-size: 1.05rem;
-		border-radius: 8px;
-		cursor: pointer;
-		transition: all 0.3s;
-		box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
-	}
-
-	.add-btn:hover {
-		background: #218838;
-		transform: translateY(-2px);
-	}
-
-	.table-container {
-		background: white;
-		border-radius: 12px;
-		overflow: hidden;
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-	}
-
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-
-	th,
-	td {
-		padding: 14px 16px;
-		text-align: left;
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	th {
-		background: #f8f9fa;
-		font-weight: 600;
-		color: #444;
-	}
-
-	tr:hover {
-		background: #f8fbff;
-	}
-
-	.edit-btn,
-	.delete-btn {
-		padding: 8px 12px;
-		margin-right: 6px;
-		border: none;
-		border-radius: 6px;
-		cursor: pointer;
-		font-size: 1.1rem;
-	}
-
-	.edit-btn {
-		background: #ffc107;
-		color: #212529;
-	}
-
-	.delete-btn {
-		background: #dc3545;
 		color: white;
-	}
-
-	.modal-form {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
-
-	.modal-form input {
-		padding: 12px;
-		border: 1px solid #ddd;
-		border-radius: 8px;
-		font-size: 1rem;
-	}
-
-	.modal-form input:focus {
-		outline: none;
-		border-color: #007bff;
-		box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
-	}
-
-	.checkbox-label {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 1rem;
-	}
-</style>
-
-<style scoped>
-	.app-container {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		background: #f8f9fa;
-	}
-
-	.header {
-		background: linear-gradient(135deg, #007bff, #0056b3);
-		color: white;
-		padding: 1rem 2rem;
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-		z-index: 10;
+		font-size: 1.8rem;
+		cursor: pointer;
+		padding: 5px 10px;
 	}
 
 	.layout {
 		display: flex;
-		flex: 1; /* занимает всё оставшееся пространство */
+		flex: 1;
 		overflow: hidden;
+		position: relative;
 	}
 
 	.sidebar {
 		background: white;
 		border-right: 1px solid #e4e7ed;
-		height: 100%;
+		height: calc(100vh - 65px);
 		overflow-y: auto;
+		transition: all 0.3s;
+		z-index: 90;
 	}
 
 	.main-content {
 		flex: 1;
-		padding: 2rem;
+		padding: 1.5rem;
 		overflow-y: auto;
 		background: #f8f9fa;
 	}
 
-	/* Чтобы sidebar был фиксированной высоты */
-	.el-aside {
-		height: calc(100vh - 60px); /* подстраивай под высоту header */
+	/* ==================== МОБИЛЬНАЯ ВЕРСИЯ ==================== */
+	@media (max-width: 768px) {
+		.hamburger {
+			display: block;
+		}
+
+		.sidebar {
+			position: fixed;
+			left: -100%;
+			top: 65px;
+			width: 100%;
+			height: calc(100vh - 65px);
+			box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+			z-index: 200;
+		}
+
+		.sidebar.open {
+			left: 0;
+		}
+
+		.main-content {
+			padding: 1rem;
+		}
+
+		/* Делаем карточки и таблицы удобными на мобильных */
+		.el-row {
+			margin: 0 !important;
+		}
+
+		.el-col {
+			margin-bottom: 15px;
+		}
+
+		table {
+			font-size: 0.95rem;
+		}
+
+		.room-card,
+		.employee-card {
+			margin-bottom: 15px;
+		}
 	}
 </style>
