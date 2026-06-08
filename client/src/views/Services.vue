@@ -134,7 +134,9 @@
 
 	async function loadAllServices() {
 		try {
-			const res = await axios.get('http://localhost:5000/api/services/list');
+			const res = await axios.get(
+				'https://hotel-71iq.onrender.com/api/services/list',
+			);
 			services.value = res.data;
 		} catch (e) {
 			console.error(e);
@@ -144,7 +146,7 @@
 	async function loadProvidedServices() {
 		try {
 			const res = await axios.get(
-				'http://localhost:5000/api/services/provided',
+				'https://hotel-71iq.onrender.com/api/services/provided',
 			);
 			providedServices.value = res.data;
 		} catch (e) {
@@ -153,7 +155,7 @@
 	}
 
 	async function loadClients() {
-		const res = await axios.get('http://localhost:5000/api/clients');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/clients');
 		clients.value = res.data;
 	}
 
@@ -164,7 +166,7 @@
 	async function provideService() {
 		try {
 			await axios.post(
-				'http://localhost:5000/api/services/provide',
+				'https://hotel-71iq.onrender.com/api/services/provide',
 				form.value,
 			);
 			ElMessage.success('Услуга успешно оказана!');

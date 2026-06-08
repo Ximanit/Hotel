@@ -52,12 +52,12 @@
 	onMounted(() => loadClients());
 
 	async function loadClients() {
-		const res = await axios.get('http://localhost:5000/api/clients');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/clients');
 		clients.value = res.data;
 	}
 
 	async function saveClient() {
-		await axios.post('http://localhost:5000/api/clients', form.value);
+		await axios.post('https://hotel-71iq.onrender.com/api/clients', form.value);
 		loadClients();
 		dialogVisible.value = false;
 		form.value = { ФИО: '', Паспорт: '', Дата_рождения: null };

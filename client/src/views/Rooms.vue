@@ -83,7 +83,7 @@
 	});
 
 	async function loadRooms() {
-		const res = await axios.get('http://localhost:5000/api/rooms');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/rooms');
 		rooms.value = res.data;
 	}
 
@@ -104,7 +104,7 @@
 			// Обновление (пока без PUT, можно добавить позже)
 			console.log('Update not implemented yet');
 		} else {
-			await axios.post('http://localhost:5000/api/rooms', form.value);
+			await axios.post('https://hotel-71iq.onrender.com/api/rooms', form.value);
 		}
 		dialogVisible.value = false;
 		loadRooms();

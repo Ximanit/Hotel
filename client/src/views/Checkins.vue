@@ -143,23 +143,27 @@
 	});
 
 	async function loadCheckins() {
-		const res = await axios.get('http://localhost:5000/api/checkins');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/checkins');
 		checkins.value = res.data;
 	}
 
 	async function loadClients() {
-		const res = await axios.get('http://localhost:5000/api/clients');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/clients');
 		clients.value = res.data;
 	}
 
 	async function loadFreeRooms() {
-		const res = await axios.get('http://localhost:5000/api/rooms/free');
+		const res = await axios.get(
+			'https://hotel-71iq.onrender.com/api/rooms/free',
+		);
 		freeRooms.value = res.data;
 	}
 
 	async function loadEmployees() {
 		// Если у вас есть маршрут для сотрудников, замените
-		const res = await axios.get('http://localhost:5000/api/employees'); // можно добавить позже
+		const res = await axios.get(
+			'https://hotel-71iq.onrender.com/api/employees',
+		); // можно добавить позже
 		employees.value = res.data.length
 			? res.data
 			: [{ idСотрудники: 1, ФИО: 'Администратор' }];
@@ -167,7 +171,10 @@
 
 	async function createCheckin() {
 		try {
-			await axios.post('http://localhost:5000/api/checkins', form.value);
+			await axios.post(
+				'https://hotel-71iq.onrender.com/api/checkins',
+				form.value,
+			);
 			ElMessage.success('Клиент успешно заселён!');
 			dialogVisible.value = false;
 			loadCheckins();
@@ -180,7 +187,9 @@
 
 	async function checkout(id) {
 		try {
-			await axios.put(`http://localhost:5000/api/checkins/${id}/checkout`);
+			await axios.put(
+				`https://hotel-71iq.onrender.com/api/checkins/${id}/checkout`,
+			);
 			ElMessage.success('Клиент выселен');
 			loadCheckins();
 			loadFreeRooms();

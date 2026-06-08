@@ -69,7 +69,9 @@
 
 	async function loadEmployees() {
 		try {
-			const res = await axios.get('http://localhost:5000/api/employees');
+			const res = await axios.get(
+				'https://hotel-71iq.onrender.com/api/employees',
+			);
 			employees.value = res.data;
 		} catch (e) {
 			console.error(e);

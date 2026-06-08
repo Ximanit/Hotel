@@ -112,7 +112,7 @@
 
 	onMounted(async () => {
 		// Можно позже подключить реальные данные
-		const res = await axios.get('http://localhost:5000/api/checkins');
+		const res = await axios.get('https://hotel-71iq.onrender.com/api/checkins');
 		recentCheckins.value = res.data.slice(0, 5);
 	});
 </script>
