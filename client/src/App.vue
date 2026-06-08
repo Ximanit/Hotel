@@ -4,35 +4,36 @@
 			<h1>🏨 Гостиница "Уют"</h1>
 		</header>
 
-		<!-- Sidebar -->
-		<el-aside
-			width="240px"
-			style="background: white; border-right: 1px solid #e4e7ed">
-			<el-menu :default-active="$route.path" router class="menu">
-				<el-menu-item index="/"
-					><el-icon><DataBoard /></el-icon> Дашборд</el-menu-item
-				>
-				<el-menu-item index="/employees"
-					><el-icon><User /></el-icon> Сотрудники</el-menu-item
-				>
-				<el-menu-item index="/clients"
-					><el-icon><UserFilled /></el-icon> Клиенты</el-menu-item
-				>
-				<el-menu-item index="/rooms"
-					><el-icon><OfficeBuilding /></el-icon> Номера</el-menu-item
-				>
-				<el-menu-item index="/checkins"
-					><el-icon><Key /></el-icon> Заселение</el-menu-item
-				>
-				<el-menu-item index="/services"
-					><el-icon><Service /></el-icon> Услуги</el-menu-item
-				>
-			</el-menu>
-		</el-aside>
+		<div class="layout">
+			<!-- Sidebar -->
+			<el-aside width="240px" class="sidebar">
+				<el-menu :default-active="$route.path" router class="menu">
+					<el-menu-item index="/"
+						><el-icon><DataBoard /></el-icon> Дашборд</el-menu-item
+					>
+					<el-menu-item index="/employees"
+						><el-icon><User /></el-icon> Сотрудники</el-menu-item
+					>
+					<el-menu-item index="/clients"
+						><el-icon><UserFilled /></el-icon> Клиенты</el-menu-item
+					>
+					<el-menu-item index="/rooms"
+						><el-icon><OfficeBuilding /></el-icon> Номера</el-menu-item
+					>
+					<el-menu-item index="/checkins"
+						><el-icon><Key /></el-icon> Заселение</el-menu-item
+					>
+					<el-menu-item index="/services"
+						><el-icon><Service /></el-icon> Услуги</el-menu-item
+					>
+				</el-menu>
+			</el-aside>
 
-		<main>
-			<router-view />
-		</main>
+			<!-- Основной контент -->
+			<main class="main-content">
+				<router-view />
+			</main>
+		</div>
 	</div>
 </template>
 
@@ -190,5 +191,47 @@
 		align-items: center;
 		gap: 8px;
 		font-size: 1rem;
+	}
+</style>
+
+<style scoped>
+	.app-container {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		background: #f8f9fa;
+	}
+
+	.header {
+		background: linear-gradient(135deg, #007bff, #0056b3);
+		color: white;
+		padding: 1rem 2rem;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+		z-index: 10;
+	}
+
+	.layout {
+		display: flex;
+		flex: 1; /* занимает всё оставшееся пространство */
+		overflow: hidden;
+	}
+
+	.sidebar {
+		background: white;
+		border-right: 1px solid #e4e7ed;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	.main-content {
+		flex: 1;
+		padding: 2rem;
+		overflow-y: auto;
+		background: #f8f9fa;
+	}
+
+	/* Чтобы sidebar был фиксированной высоты */
+	.el-aside {
+		height: calc(100vh - 60px); /* подстраивай под высоту header */
 	}
 </style>
